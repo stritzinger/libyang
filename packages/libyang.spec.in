@@ -2,6 +2,7 @@ Name: @PACKAGE_NAME@
 Version: @LIBYANG_VERSION@
 Release: 0
 Summary: Libyang library
+Group: Development/Languages/Other
 Url: https://github.com/CESNET/libyang
 Source: %{url}/archive/@BRANCH@.tar.gz
 Source1: libyang.rpmlintrc
@@ -52,21 +53,25 @@ Conflicts: @CONFLICT_PACKAGE_NAME@ = @LIBYANG_MAJOR_VERSION@.@LIBYANG_MINOR_VERS
 
 %package devel
 Summary:    Headers of libyang library
+Group: Development/Languages/Other
 Requires:   %{name} = %{version}-%{release}
 Requires:   pcre-devel
 
 %if %{with_lang_bind}
 %package -n libyang-cpp@PACKAGE_PART_NAME@
 Summary:    Bindings to c++ language
+Group: Development/Libraries/C and C++
 Requires:   %{name} = %{version}-%{release}
 
 %package -n libyang-cpp@PACKAGE_PART_NAME@-devel
 Summary:    Headers of bindings to c++ language
+Group: Development/Libraries/C and C++
 Requires:   libyang-cpp@PACKAGE_PART_NAME@ = %{version}-%{release}
 Requires:   pcre-devel
 
 %package -n python3-yang@PACKAGE_PART_NAME@
 Summary:    Binding to python
+Group: Development/Libraries/Python
 Requires:   libyang-cpp@PACKAGE_PART_NAME@ = %{version}-%{release}
 Requires:   %{name} = %{version}-%{release}
 
@@ -84,7 +89,7 @@ Bindings of libyang library to python language.
 Headers of libyang library.
 
 %description
-Libyang is YANG data modelling language parser and toolkit written (and providing API) in C.
+A YANG data modelling language parser and toolkit written (and providing API) in C.
 
 %prep
 %setup -n libyang-@BRANCH@
@@ -123,12 +128,10 @@ ctest --output-on-failure
 cd build
 make DESTDIR=%{buildroot} install
 
-%post -p /sbin/ldconfig
 %if %{with_lang_bind}
     %post -n libyang-cpp@PACKAGE_PART_NAME@ -p /sbin/ldconfig
-%endif 
+%endif
 
-%postun -p /sbin/ldconfig
 %if %{with_lang_bind}
     %postun -n libyang-cpp@PACKAGE_PART_NAME@ -p /sbin/ldconfig
 %endif 
