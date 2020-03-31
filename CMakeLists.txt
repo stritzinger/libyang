@@ -344,7 +344,7 @@ add_custom_target(cclean
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 # YANG extensions plugins
-set(EXTENSIONS_LIST "nacm" "metadata" "yangdata")
+set(EXTENSIONS_LIST "nacm" "metadata" "yangdata" "schema_mount")
 # if the tests are enabled, build libyang_ext_test
 if(ENABLE_BUILD_TESTS)
     find_package(CMocka 1.0.0)
