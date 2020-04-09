@@ -78,17 +78,24 @@ schema_mount_cardinality(struct lys_ext_instance * UNUSED(ext))
   return 0;
 }
 
+struct lyext_substmt schema_mount_substmt[] = {
+    {LY_STMT_ARGUMENT, 0, LY_STMT_CARD_OPT}, /* const char* + uint8_t */
+    {0, 0, 0} /* terminating item */
+};
+
 /**
  * @brief Plugin for the SCHEMA_MOUNT's schema-mount extension
  */
-struct lyext_plugin schema_mount_ext = {
+struct lyext_plugin_complex schema_mount_ext = {
     .type = LYEXT_FLAG,
     .flags = LYEXT_OPT_INHERIT,
     .check_position = &schema_mount_position,
     .check_result = &schema_mount_cardinality,
-    .check_inherit = &schema_mount_inherit
+    .check_inherit = &schema_mount_inherit,
+    .substmt = schema_mount_substmt,
+    /* final size of the extension instance structure with the space for storing the substatements */
+    .instance_size = (sizeof(struct lys_ext_instance_complex) - 1) + sizeof(char) + sizeof(uint8_t*)
 };
-
 
 /**
  * @brief list of all extension plugins implemented here
@@ -96,6 +103,6 @@ struct lyext_plugin schema_mount_ext = {
  * MANDATORY object for all libyang extension plugins, the name must match the <name>.so
  */
 struct lyext_plugin_list schema_mount[] = {
-    {"ietf-yang-schema-mount", "2017-10-09", "schema-mount", &schema_mount_ext},
+    {"ietf-yang-schema-mount", "2019-01-14", "mount-point", (struct lyext_plugin*)&schema_mount_ext},
     {NULL, NULL, NULL, NULL} /* terminating item */
 };
