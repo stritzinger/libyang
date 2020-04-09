@@ -78,6 +78,20 @@ schema_mount_cardinality(struct lys_ext_instance * UNUSED(ext))
   return 0;
 }
 
+/**
+ * @brief Callback to decide if data is valid towards to schema.
+ *
+ * @param[in] ext Extension instance to be checked.
+ * @param[in] node Data node, which try to valid.
+ * @return 0 - valid
+ *         1 - invalid
+ */
+int schema_mount_valid_data(struct lys_ext_instance *UNUSED(ext), struct lyd_node *UNUSED(node))
+{
+    return 0;
+}
+
+
 struct lyext_substmt schema_mount_substmt[] = {
     {LY_STMT_ARGUMENT, 0, LY_STMT_CARD_OPT}, /* const char* + uint8_t */
     {0, 0, 0} /* terminating item */
@@ -92,6 +106,7 @@ struct lyext_plugin_complex schema_mount_ext = {
     .check_position = &schema_mount_position,
     .check_result = &schema_mount_cardinality,
     .check_inherit = &schema_mount_inherit,
+    .valid_data = &schema_mount_valid_data,
     .substmt = schema_mount_substmt,
     /* final size of the extension instance structure with the space for storing the substatements */
     .instance_size = (sizeof(struct lys_ext_instance_complex) - 1) + sizeof(char) + sizeof(uint8_t*)
