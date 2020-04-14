@@ -94,6 +94,7 @@ int schema_mount_valid_data(struct lys_ext_instance *UNUSED(ext), struct lyd_nod
 
 struct lyext_substmt schema_mount_substmt[] = {
     {LY_STMT_ARGUMENT, 0, LY_STMT_CARD_OPT}, /* const char* + uint8_t */
+    {LY_STMT_DESCRIPTION,   1 * sizeof(const char*) + 1 * sizeof(uint8_t), LY_STMT_CARD_OPT}, /* const char* */
     {0, 0, 0} /* terminating item */
 };
 
@@ -109,7 +110,7 @@ struct lyext_plugin_complex schema_mount_ext = {
     .valid_data = &schema_mount_valid_data,
     .substmt = schema_mount_substmt,
     /* final size of the extension instance structure with the space for storing the substatements */
-    .instance_size = (sizeof(struct lys_ext_instance_complex) - 1) + sizeof(char) + sizeof(uint8_t*)
+    .instance_size = (sizeof(struct lys_ext_instance_complex) - 1) + 2 * sizeof(char) + sizeof(uint8_t*)
 };
 
 /**
