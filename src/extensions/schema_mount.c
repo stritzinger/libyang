@@ -101,8 +101,8 @@ struct lyext_substmt schema_mount_substmt[] = {
  * @brief Plugin for the SCHEMA_MOUNT's schema-mount extension
  */
 struct lyext_plugin_complex schema_mount_ext = {
-    .type = LYEXT_FLAG,
-    .flags = LYEXT_OPT_INHERIT,
+    .type = LYEXT_COMPLEX,
+    .flags = LYEXT_OPT_INHERIT | LYEXT_OPT_VALID | LYEXT_OPT_VALID_SUBTREE,
     .check_position = &schema_mount_position,
     .check_result = &schema_mount_cardinality,
     .check_inherit = &schema_mount_inherit,
